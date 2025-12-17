@@ -11,10 +11,10 @@
                 "BF_DOTCODE"
             ],
             "MirrorMode": "MM_BOTH",
-            "Name": "bfs1"
+            "Name": "bfs1-read-rate-first"
         },
         {
-            "Name": "bfs2"
+            "Name": "bfs2-read-rate-first"
         }
     ],
     "BarcodeReaderTaskSettingOptions": [
@@ -23,15 +23,15 @@
                 "BF_DATAMATRIX"
             ],
             "BarcodeFormatSpecificationNameArray": [
-                "bfs1",
-                "bfs2"
+                "bfs1-read-rate-first",
+                "bfs2-read-rate-first"
             ],
             "ExpectedBarcodesCount": 999,
             "MaxThreadsInOneTask": 4,
-            "Name": "task-read-barcodes",
+            "Name": "task-read-barcodes-read-rate",
             "SectionArray": [
                 {
-                    "ImageParameterName": "ip-read-barcodes",
+                    "ImageParameterName": "ip-read-barcodes-read-rate",
                     "Section": "ST_REGION_PREDETECTION",
                     "StageArray": [
                         {
@@ -40,10 +40,21 @@
                     ]
                 },
                 {
-                    "ImageParameterName": "ip-read-barcodes",
+                    "ImageParameterName": "ip-read-barcodes-read-rate",
                     "Section": "ST_BARCODE_LOCALIZATION",
                     "StageArray": [
                         {
+                            "LocalizationModes": [
+                                {
+                                    "Mode": "LM_CONNECTED_BLOCKS"
+                                },
+                                {
+                                    "Mode": "LM_LINES"
+                                },
+                                {
+                                    "Mode": "LM_STATISTICS"
+                                }
+                            ],
                             "Stage": "SST_LOCALIZE_CANDIDATE_BARCODES"
                         },
                         {
@@ -52,7 +63,7 @@
                     ]
                 },
                 {
-                    "ImageParameterName": "ip-read-barcodes",
+                    "ImageParameterName": "ip-read-barcodes-read-rate",
                     "Section": "ST_BARCODE_DECODING",
                     "StageArray": [
                         {
@@ -75,9 +86,10 @@
     "CaptureVisionTemplates": [
         {
             "ImageROIProcessingNameArray": [
-                "roi-read-barcodes"
+                "roi-read-barcodes-read-rate"
             ],
-            "Name": "ReadBarcodes_Default"
+            "Name": "ReadBarcodes_ReadRateFirst",
+            "Timeout": 100000
         }
     ],
     "GlobalParameter": {
@@ -90,12 +102,24 @@
                     "Stage": "SST_INPUT_COLOR_IMAGE"
                 },
                 {
+                    "ImageScaleSetting": {
+                        "EdgeLengthThreshold": 100000,
+                        "ScaleType": "ST_SCALE_DOWN"
+                    },
                     "Stage": "SST_SCALE_IMAGE"
                 },
                 {
                     "Stage": "SST_CONVERT_TO_GRAYSCALE"
                 },
                 {
+                    "GrayscaleTransformationModes": [
+                        {
+                            "Mode": "GTM_ORIGINAL"
+                        },
+                        {
+                            "Mode": "GTM_INVERTED"
+                        }
+                    ],
                     "Stage": "SST_TRANSFORM_GRAYSCALE"
                 },
                 {
@@ -140,14 +164,14 @@
                     "Stage": "SST_REMOVE_TEXT_ZONES_FROM_BINARY"
                 }
             ],
-            "Name": "ip-read-barcodes"
+            "Name": "ip-read-barcodes-read-rate"
         }
     ],
     "TargetROIDefOptions": [
         {
-            "Name": "roi-read-barcodes",
+            "Name": "roi-read-barcodes-read-rate",
             "TaskSettingNameArray": [
-                "task-read-barcodes"
+                "task-read-barcodes-read-rate"
             ]
         }
     ],
