@@ -110,11 +110,6 @@
                             "BlockSizeX": 71,
                             "BlockSizeY": 71,
                             "Mode": "BM_LOCAL_BLOCK"
-                        },
-                        {
-                            "BlockSizeX": 0,
-                            "BlockSizeY": 0,
-                            "Mode": "BM_LOCAL_BLOCK"
                         }
                     ],
                     "Stage": "SST_BINARIZE_IMAGE"
